@@ -9,8 +9,11 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,12 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        verificarPermissao();
+        if (savedInstanceState == null) verificarPermissao();
     }
 
     private void abrirCameraDoCelular() {
@@ -53,5 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
+            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+            ImageView viewImagem = findViewById(R.id.imagemRetirada);
+            viewImagem.setImageBitmap(imageBitmap);
+        }
     }
 }
