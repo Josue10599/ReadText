@@ -1,10 +1,4 @@
-package com.josuelopes.readtext;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+package com.josuelopes.readtext.ui;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,10 +6,19 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import com.josuelopes.readtext.R;
+
+import java.util.Objects;
+
+public class FotoActivity extends AppCompatActivity {
 
     public static final int REQUEST_CODE_CAMERA = 2;
     public static final int REQUEST_CODE_IMAGE_CAMERA = 1;
@@ -51,10 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        ImageView viewImagem = findViewById(R.id.imagemRetirada);
         if (requestCode == REQUEST_CODE_IMAGE_CAMERA && resultCode == RESULT_OK) {
-            Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-            ImageView viewImagem = findViewById(R.id.imagemRetirada);
-            viewImagem.setImageBitmap(imageBitmap);
+            if (data != null) {
+                Bitmap imageBitmap = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
+                viewImagem.setImageBitmap(imageBitmap);
+            } else {
+                viewImagem.setImageDrawable(getDrawable(R.drawable.ic_error_outline_black_24dp));
+            }
         }
     }
 }

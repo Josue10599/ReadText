@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ReadText</string>
+    <string name="erro_leitura_imagem">Erro ao realizar leitura da imagem!</string>
+    <string name="foto_retirada">Foto retirada pelo usuário.</string>
 </resources>
